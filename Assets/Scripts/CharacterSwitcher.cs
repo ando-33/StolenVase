@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
-/// CharacterSwitcher（クリックで進行＋証拠表示付き＋背景対応）
+/// CharacterSwitcher（クリック進行＋カットイン＋誤証拠ヒント対応版）
 /// </summary>
 public class CharacterSwitcher : MonoBehaviour
 {
@@ -34,16 +34,17 @@ public class CharacterSwitcher : MonoBehaviour
     public Button evAlarmBtn;
     public Button evInnerLockBtn;
     public Button evDeviceBtn;
-    public Image evidencePreview;  // 証拠プレビュー（パネル内）
+    public Image evidencePreview;
     public TMP_Text evidenceCaption;
     public TMP_Text evidenceHint;
 
-    [Header("Cut-in (証拠表示用)")]
-    public Image cutInImage;  // 証拠画像の拡大表示（Canvas直下に設置）
+    [Header("Cut-in (証拠演出用)")]
+    public Image cutInImage;
+
+    [Header("Cut-in Hint (EvidencePanelの外に置く)")]
+    public TMP_Text cutInHintText; // ← Canvas直下に置く
 
     [Header("Game Over UI")]
-    public GameObject gameOverPanel;
-    public TMP_Text gameOverText;
     public Button retryButton;
 
     [Header("Sprites")]
@@ -67,23 +68,17 @@ public class CharacterSwitcher : MonoBehaviour
         // ===== 初期化 =====
         choicesPanel.SetActive(false);
         evidencePanel.SetActive(false);
-        gameOverPanel.SetActive(false);
         presentButton.gameObject.SetActive(false);
-
         if (evidenceHint) evidenceHint.text = "";
         if (choicesHint) choicesHint.text = "";
         if (clickHintText) clickHintText.gameObject.SetActive(false);
         if (choicesTitleText) choicesTitleText.gameObject.SetActive(false);
-
-        // 🔹 証拠画像は常に非表示スタート
         if (evidencePreview) evidencePreview.gameObject.SetActive(false);
         if (cutInImage) cutInImage.gameObject.SetActive(false);
+        if (cutInHintText) cutInHintText.gameObject.SetActive(false);
 
-        // 背景設定
-        if (backgroundImage)
-            backgroundImage.enabled = true;
+        if (backgroundImage) backgroundImage.enabled = true;
 
-        // 探偵（左側）
         if (characterLeft && detectiveSprite)
         {
             characterLeft.enabled = true;
@@ -101,7 +96,6 @@ public class CharacterSwitcher : MonoBehaviour
         StartCoroutine(IntroSequence());
     }
 
-    // --- 冒頭ナレーション ---
     IEnumerator IntroSequence()
     {
         Narration("美術館で高価な壺が“盗まれた”。まずは関係者から事情を聴こう。");
@@ -110,7 +104,6 @@ public class CharacterSwitcher : MonoBehaviour
         ShowMeetSuspectsMenu();
     }
 
-    // --- 汎用クリック待ち ---
     IEnumerator WaitForClick()
     {
         if (clickHintText) clickHintText.gameObject.SetActive(true);
@@ -119,7 +112,6 @@ public class CharacterSwitcher : MonoBehaviour
         yield return null;
     }
 
-    // ===== 3人の供述選択 =====
     void ShowMeetSuspectsMenu()
     {
         nameText.text = "";
@@ -172,7 +164,6 @@ public class CharacterSwitcher : MonoBehaviour
         }
     }
 
-    // ===== 警備員証言 =====
     IEnumerator Start_A_GuardTestimony()
     {
         ShowLeftCharacter("探偵", "本当に警報音を聞いたのですか？", keepRight: true);
@@ -212,10 +203,8 @@ public class CharacterSwitcher : MonoBehaviour
         if (evidenceHint) evidenceHint.text = "";
         if (nameText) nameText.gameObject.SetActive(false);
         if (dialogueText) dialogueText.gameObject.SetActive(false);
-
         evidencePanel.SetActive(true);
         if (evidencePreview) evidencePreview.gameObject.SetActive(true);
-
         UpdateEvidencePreview(0);
     }
 
@@ -223,27 +212,66 @@ public class CharacterSwitcher : MonoBehaviour
     {
         UpdateEvidencePreview(id);
 
-        // 🔹 証拠2「内側ロック痕」を選んだら専用演出
         if (id == 2)
-        {
             StartCoroutine(ShowInnerLockEvidenceCutIn());
-        }
         else
+            StartCoroutine(ShowWrongEvidenceCutIn(id));
+    }
+
+    // 🔹 間違い証拠（画像＋テキスト表示 → クリックで両方消える）
+    IEnumerator ShowWrongEvidenceCutIn(int id)
+    {
+        if (evidencePanel) evidencePanel.SetActive(false);
+
+        if (cutInImage)
         {
-            ShowEvidenceWrong("提示する証拠が違うようです。もう一度選んでください。");
+            cutInImage.gameObject.SetActive(true);
+            if (id == 1) cutInImage.sprite = spAlarmLog;
+            else if (id == 3) cutInImage.sprite = spTimerDevice;
+            cutInImage.preserveAspect = true;
+        }
+
+        if (cutInHintText)
+        {
+            cutInHintText.text = "提示する証拠が違うようです。もう一度選んでください。";
+            cutInHintText.gameObject.SetActive(true);
+        }
+
+        PlaySE(sfxReveal);
+        yield return WaitForClick();
+
+        if (cutInImage)
+        {
+            cutInImage.sprite = null;
+            cutInImage.gameObject.SetActive(false);
+        }
+
+        if (cutInHintText)
+        {
+            cutInHintText.text = "";
+            cutInHintText.gameObject.SetActive(false);
+        }
+
+        if (evidencePreview)
+        {
+            evidencePreview.sprite = null;
+            evidencePreview.color = new Color(1, 1, 1, 0);
+        }
+
+        if (evidencePanel)
+        {
+            evidencePanel.SetActive(true);
+            evidencePreview.color = new Color(1, 1, 1, 1);
         }
     }
 
-    // 🔹 証拠2：内側ロック痕を表示するカットイン演出
+    // 🔹 正解証拠（内側ロック）
     IEnumerator ShowInnerLockEvidenceCutIn()
     {
-        // まずパネルを閉じてUIを隠す
         evidencePanel.SetActive(false);
         if (nameText) nameText.gameObject.SetActive(false);
         if (dialogueText) dialogueText.gameObject.SetActive(false);
-        if (clickHintText) clickHintText.gameObject.SetActive(false);
 
-        // 🔸 証拠画像表示
         if (cutInImage)
         {
             cutInImage.gameObject.SetActive(true);
@@ -252,20 +280,17 @@ public class CharacterSwitcher : MonoBehaviour
         }
 
         PlaySE(sfxReveal);
-        yield return WaitForClick(); // ← 左クリックで進む
+        yield return WaitForClick();
 
-        // 🔸 証拠画像を非表示
         if (cutInImage)
         {
             cutInImage.sprite = null;
             cutInImage.gameObject.SetActive(false);
         }
 
-        // 通常のセリフに戻す
         if (nameText) nameText.gameObject.SetActive(true);
         if (dialogueText) dialogueText.gameObject.SetActive(true);
 
-        // 証拠OK後の進行
         EvidenceOK("探偵", "窓は“内側”からロック解除の痕跡。外部犯行に見せかけた偽装だ。");
         yield return WaitForClick();
         StartCoroutine(Start_PreChoiceBait());
@@ -276,11 +301,6 @@ public class CharacterSwitcher : MonoBehaviour
         if (evidencePreview) evidencePreview.gameObject.SetActive(false);
         presentButton.gameObject.SetActive(false);
         ShowLeftCharacter(speaker, text);
-    }
-
-    void ShowEvidenceWrong(string hint)
-    {
-        if (evidenceHint) evidenceHint.text = hint;
     }
 
     // ===== 館長パート =====
@@ -295,21 +315,18 @@ public class CharacterSwitcher : MonoBehaviour
         ShowCulpritChoices4();
     }
 
-    // ===== 犯人選択（4択） =====
+    // ===== 犯人選択 =====
     void ShowCulpritChoices4()
     {
         nameText.text = "";
         dialogueText.text = "";
         choicesPanel.SetActive(true);
         if (choicesHint) choicesHint.text = "";
-
         if (choicesTitleText)
         {
             choicesTitleText.text = "事件の犯人を選んでください";
             choicesTitleText.gameObject.SetActive(true);
         }
-
-        if (choice4Button) choice4Button.gameObject.SetActive(true);
 
         SetBtn(choice1Button, "学芸員");
         SetBtn(choice2Button, "清掃員");
@@ -329,7 +346,6 @@ public class CharacterSwitcher : MonoBehaviour
         });
     }
 
-    // ===== 自白 =====
     IEnumerator Show_Confession()
     {
         ShowLeftCharacter("探偵", "真犯人は館長、あなたです。今、あなたは警報音が展示“台”から鳴っていたことを知っていた。展示台の下に仕掛けた“タイマー式警報装置”が証拠です。");
@@ -348,14 +364,12 @@ public class CharacterSwitcher : MonoBehaviour
         dialogueText.text = "（お疲れさまでした）";
     }
 
-    // ===== 「これだ！」演出（証拠3：タイマー装置） =====
     IEnumerator ShowDeviceEvidenceCutIn()
     {
         if (characterLeft) characterLeft.enabled = false;
         if (characterRight) characterRight.enabled = false;
         if (nameText) nameText.gameObject.SetActive(false);
         if (dialogueText) dialogueText.gameObject.SetActive(false);
-        if (clickHintText) clickHintText.gameObject.SetActive(false);
 
         if (cutInImage)
         {
@@ -377,7 +391,7 @@ public class CharacterSwitcher : MonoBehaviour
         if (dialogueText) dialogueText.gameObject.SetActive(true);
     }
 
-    // ===== 共通表示関数 =====
+    // ===== 共通関数 =====
     void Narration(string text)
     {
         nameText.text = "ナレーション";
@@ -403,7 +417,6 @@ public class CharacterSwitcher : MonoBehaviour
         characterRight.sprite = sprite;
     }
 
-    // ===== ボタン共通関数 =====
     void SetBtn(Button b, string t)
     {
         var tt = b.GetComponentInChildren<TMP_Text>();
@@ -425,8 +438,8 @@ public class CharacterSwitcher : MonoBehaviour
         {
             default: evidencePreview.sprite = null; evidenceCaption.text = "提示する証拠を選んでください。"; break;
             case 1: evidencePreview.sprite = spAlarmLog; evidenceCaption.text = "証拠1：警報ログ（作動なし）"; break;
-            case 2: evidencePreview.sprite = spInnerLock; evidenceCaption.text = "証拠2：内側ロック痕"; break;
-            case 3: evidencePreview.sprite = spTimerDevice; evidenceCaption.text = "証拠3：タイマー式警報音装置"; break;
+            case 2: evidencePreview.sprite = spInnerLock; evidenceCaption.text = "証拠2：内側ロック解除痕"; break;
+            case 3: evidencePreview.sprite = spTimerDevice; evidenceCaption.text = "証拠3：タイマー式警報装置"; break;
         }
     }
 
