@@ -41,7 +41,7 @@ public class EvidenceMenuUI : MonoBehaviour
             case 1:
                 detailImage.sprite = spAlarmLog;
                 detailTitle.text = "警報ログ";
-                detailDescription.text = "防犯システム記録。事件当時、警報は作動していなかった。";
+                detailDescription.text = "防犯システム記録。事件当時、警報は作動していなかった。窓の内側からロックを外すと鳴らない仕組み。";
                 break;
             case 2:
                 detailImage.sprite = spInnerLock;
@@ -51,7 +51,7 @@ public class EvidenceMenuUI : MonoBehaviour
             case 3:
                 detailImage.sprite = spTimerDevice;
                 detailTitle.text = "タイマー式警報装置";
-                detailDescription.text = "展示台下に仕掛けられた装置。偽装工作の決定的証拠。";
+                detailDescription.text = "展示台の裏に仕掛けられた警報装置。偽装工作の決定的証拠。展示台の裏に仕掛けられた事実は探偵以外は知らない。";
                 break;
         }
     }

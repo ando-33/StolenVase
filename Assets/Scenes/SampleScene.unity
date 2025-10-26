@@ -1463,7 +1463,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368075283}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1476,11 +1476,11 @@ RectTransform:
   - {fileID: 1372827961}
   - {fileID: 1604602295}
   - {fileID: 2111020550}
-  m_Father: {fileID: 1364507612}
+  m_Father: {fileID: 2077256102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 38.09851}
+  m_AnchoredPosition: {x: 0, y: 195.53851}
   m_SizeDelta: {x: 566.92, y: 377.80298}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368075285
@@ -2476,7 +2476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4975,7 +4975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32, y: -33.440002}
+  m_AnchoredPosition: {x: 32, y: -95}
   m_SizeDelta: {x: 938.3, y: 244.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1280479510
@@ -5232,7 +5232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -144.64, y: -87.74}
+  m_AnchoredPosition: {x: -144.64001, y: -87.73999}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1327083090
@@ -5387,7 +5387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5558,6 +5558,7 @@ GameObject:
   - component: {fileID: 1364507612}
   - component: {fileID: 1364507614}
   - component: {fileID: 1364507613}
+  - component: {fileID: 1364507615}
   m_Layer: 5
   m_Name: DialoguPanel
   m_TagString: Untagged
@@ -5581,7 +5582,6 @@ RectTransform:
   - {fileID: 69438465}
   - {fileID: 1270335014}
   - {fileID: 1299393494}
-  - {fileID: 368075284}
   - {fileID: 1989714580}
   m_Father: {fileID: 2077256102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5628,6 +5628,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364507611}
   m_CullTransparentMesh: 1
+--- !u!114 &1364507615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364507611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5f8679b1e8314b4dad1e7c02b00d254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundImage: {fileID: 1338765035}
+  characterLeft: {fileID: 716556985}
+  characterRight: {fileID: 716556985}
+  nameText: {fileID: 69438463}
+  dialogueText: {fileID: 1270335012}
+  clickHintText: {fileID: 2141451369}
+  choicesPanel: {fileID: 1299393493}
+  choicesTitleText: {fileID: 692523350}
+  choice1Button: {fileID: 9915817}
+  choice2Button: {fileID: 1697591940}
+  choice3Button: {fileID: 397350208}
+  choice4Button: {fileID: 2143673203}
+  choicesHint: {fileID: 227015866}
+  presentButton: {fileID: 1581310972}
+  evidencePanel: {fileID: 368075283}
+  evAlarmBtn: {fileID: 1497529179}
+  evInnerLockBtn: {fileID: 1471718429}
+  evDeviceBtn: {fileID: 1372827964}
+  evidencePreview: {fileID: 1046407166}
+  evidenceCaption: {fileID: 1604602297}
+  evidenceHint: {fileID: 2111020552}
+  cutInImage: {fileID: 1842982798}
+  cutInHintText: {fileID: 308116683}
+  retryButton: {fileID: 1201295571}
+  curatorNormal: {fileID: 21300000, guid: 8f2258b3f48e45a4094621f7fc504e97, type: 3}
+  cleanerNormal: {fileID: 21300000, guid: 500139e26fae969468e329fb8ec5e7e7, type: 3}
+  guardNormal: {fileID: 21300000, guid: b705a107f6b0acb4a85ff73db2d64516, type: 3}
+  guardNervous: {fileID: 21300000, guid: 2f92204513da9f542b063d70e963d5f1, type: 3}
+  directorNormal: {fileID: 21300000, guid: 525cda01b65a8d64186418ca262ebf37, type: 3}
+  directorConfess: {fileID: 21300000, guid: 086ec2631c149fd4db33c71d7b675743, type: 3}
+  detectiveSprite: {fileID: 21300000, guid: ab54938d0d2736745943c93401fb4833, type: 3}
+  spAlarmLog: {fileID: 21300000, guid: 46ed533d9e9806e499fd6dfb3cc158ef, type: 3}
+  spInnerLock: {fileID: 21300000, guid: 6893d9219124d824087fabde070766ce, type: 3}
+  spTimerDevice: {fileID: 21300000, guid: 0e846cc5f9e316e42a5e2195f43ec6b2, type: 3}
+  sfx: {fileID: 0}
+  sfxReveal: {fileID: 0}
+  sfxConfess: {fileID: 0}
 --- !u!1 &1372827960
 GameObject:
   m_ObjectHideFlags: 0
@@ -6357,11 +6406,11 @@ RectTransform:
   - {fileID: 959644391}
   m_Father: {fileID: 1364507612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 22.720001}
-  m_SizeDelta: {x: 242.35, y: 45.440002}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -305, y: -514}
+  m_SizeDelta: {x: 242.34998, y: 80}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1581310970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7756,7 +7805,6 @@ GameObject:
   - component: {fileID: 2077256101}
   - component: {fileID: 2077256100}
   - component: {fileID: 2077256099}
-  - component: {fileID: 2077256103}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7852,6 +7900,7 @@ RectTransform:
   - {fileID: 308116682}
   - {fileID: 1327083089}
   - {fileID: 503933358}
+  - {fileID: 368075284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7859,55 +7908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2077256103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077256098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5f8679b1e8314b4dad1e7c02b00d254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundImage: {fileID: 1338765035}
-  characterLeft: {fileID: 716556985}
-  characterRight: {fileID: 716556985}
-  nameText: {fileID: 69438463}
-  dialogueText: {fileID: 1270335012}
-  clickHintText: {fileID: 2141451369}
-  choicesPanel: {fileID: 1299393493}
-  choicesTitleText: {fileID: 692523350}
-  choice1Button: {fileID: 9915817}
-  choice2Button: {fileID: 1697591940}
-  choice3Button: {fileID: 397350208}
-  choice4Button: {fileID: 2143673203}
-  choicesHint: {fileID: 227015866}
-  presentButton: {fileID: 1581310972}
-  evidencePanel: {fileID: 368075283}
-  evAlarmBtn: {fileID: 1497529179}
-  evInnerLockBtn: {fileID: 1471718429}
-  evDeviceBtn: {fileID: 1372827964}
-  evidencePreview: {fileID: 1046407166}
-  evidenceCaption: {fileID: 1604602297}
-  evidenceHint: {fileID: 2111020552}
-  cutInImage: {fileID: 1842982798}
-  cutInHintText: {fileID: 308116683}
-  retryButton: {fileID: 1201295571}
-  curatorNormal: {fileID: 21300000, guid: 8f2258b3f48e45a4094621f7fc504e97, type: 3}
-  cleanerNormal: {fileID: 21300000, guid: 500139e26fae969468e329fb8ec5e7e7, type: 3}
-  guardNormal: {fileID: 21300000, guid: b705a107f6b0acb4a85ff73db2d64516, type: 3}
-  guardNervous: {fileID: 21300000, guid: b705a107f6b0acb4a85ff73db2d64516, type: 3}
-  directorNormal: {fileID: 21300000, guid: 525cda01b65a8d64186418ca262ebf37, type: 3}
-  directorConfess: {fileID: 21300000, guid: 086ec2631c149fd4db33c71d7b675743, type: 3}
-  detectiveSprite: {fileID: 21300000, guid: ab54938d0d2736745943c93401fb4833, type: 3}
-  spAlarmLog: {fileID: 21300000, guid: 46ed533d9e9806e499fd6dfb3cc158ef, type: 3}
-  spInnerLock: {fileID: 21300000, guid: 6893d9219124d824087fabde070766ce, type: 3}
-  spTimerDevice: {fileID: 21300000, guid: 0e846cc5f9e316e42a5e2195f43ec6b2, type: 3}
-  sfx: {fileID: 0}
-  sfxReveal: {fileID: 0}
-  sfxConfess: {fileID: 0}
 --- !u!1 &2111020549
 GameObject:
   m_ObjectHideFlags: 0
@@ -7983,7 +7983,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
