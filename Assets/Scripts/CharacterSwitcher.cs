@@ -61,6 +61,11 @@ public class CharacterSwitcher : MonoBehaviour
     private bool heardCurator, heardCleaner, heardGuard;
     private bool isCorrectSelected = false;
 
+    //音にまつわるコンポーネントとSE音情報
+    AudioSource audio;
+    public AudioClip se_present;
+  
+
     void Awake()
     {
         if (!presentButton) Debug.LogError("Present Button が未割り当てです。", this);
@@ -69,6 +74,7 @@ public class CharacterSwitcher : MonoBehaviour
 
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         if (choicesPanel) choicesPanel.SetActive(false);
         if (evidencePanel) evidencePanel.SetActive(false);
         if (presentButton) presentButton.gameObject.SetActive(false);
@@ -217,6 +223,10 @@ public class CharacterSwitcher : MonoBehaviour
             cutInImage.preserveAspect = true;
         }
 
+        // 🔊 効果音を再生
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySE(SEType.Present);
+
         PlaySE(sfxReveal);
         yield return WaitForClick();
         if (cutInImage) cutInImage.gameObject.SetActive(false);
@@ -239,7 +249,7 @@ public class CharacterSwitcher : MonoBehaviour
     IEnumerator WrongEvidenceFlow()
     {
         if (evidencePanel) evidencePanel.SetActive(false);
-        ShowLeftCharacter("探偵", "提示する証拠が違うようです。もう一度選びなおしてください。");
+        ShowLeftCharacter("探偵", "提示する証拠が違うようだ。もう一度選び直そう。");
         yield return WaitForClick();
 
         HideDialogue(); // ←★ここで発言を消してから証拠パネルを再表示
@@ -267,6 +277,10 @@ public class CharacterSwitcher : MonoBehaviour
             cutInImage.sprite = spInnerLock;
             cutInImage.preserveAspect = true;
         }
+
+        // 🔊 効果音を再生
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySE(SEType.Present);
 
         PlaySE(sfxReveal);
         yield return WaitForClick();
