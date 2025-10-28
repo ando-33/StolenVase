@@ -7,6 +7,7 @@ public enum BGMType
     None,
     Title,
     InGame,
+    End,
 
 }
 
@@ -15,7 +16,7 @@ public enum SEType
 {
     Present,
     Click,
-    
+
 }
 
 public class SoundManager : MonoBehaviour
@@ -26,12 +27,13 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip titleBGM;
     public AudioClip stageBGM;
+    public AudioClip endingBGM;
 
     // SEタイプ別の効果音
     public AudioClip sePresent;
     public AudioClip seClick;
 
-   
+
 
 
 
@@ -68,6 +70,10 @@ public class SoundManager : MonoBehaviour
                     break;
                 case BGMType.InGame:
                     audio.clip = stageBGM;
+                    audio.Play();
+                    break;
+                case BGMType.End:
+                    audio.clip = endingBGM;
                     audio.Play();
                     break;
             }

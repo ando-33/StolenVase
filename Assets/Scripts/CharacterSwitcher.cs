@@ -64,6 +64,7 @@ public class CharacterSwitcher : MonoBehaviour
     //音にまつわるコンポーネントとSE音情報
     AudioSource audio;
     public AudioClip se_present;
+    public AudioClip se_click;
   
 
     void Awake()
@@ -105,7 +106,7 @@ public class CharacterSwitcher : MonoBehaviour
 
     IEnumerator IntroSequence()
     {
-        Narration("美術館で高価な壺が“盗まれた”。まずは関係者から事情を聴いて、証拠と矛盾する証言には証拠を提示しよう");
+        Narration("美術館で高価な壺が“盗まれた”。まずは関係者から事情を聴いて、証拠と矛盾する供述には証拠を提示しよう");
         yield return new WaitForSeconds(2f);
         yield return WaitForClick();
         ShowMeetSuspectsMenu();
@@ -223,7 +224,7 @@ public class CharacterSwitcher : MonoBehaviour
             cutInImage.preserveAspect = true;
         }
 
-        // 🔊 効果音を再生
+        // 効果音を再生
         if (SoundManager.instance != null)
             SoundManager.instance.PlaySE(SEType.Present);
 
@@ -333,10 +334,23 @@ public class CharacterSwitcher : MonoBehaviour
         choice3Button.onClick.AddListener(() => choicesHint.text = "決定的な証拠がない。もう一度選んでください。");
         choice4Button.onClick.AddListener(() =>
         {
+            // 効果音を再生
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlaySE(SEType.Present);
+            }
+            // 🔊 クリックした瞬間にBGMをエンディングに切り替える
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.StopBgm();           // 現在のBGMを止める
+                SoundManager.instance.PlayBgm(BGMType.End); // エンディングBGMを再生
+            }
+
             choicesPanel.SetActive(false);
             if (choicesTitleText) choicesTitleText.gameObject.SetActive(false);
             StartCoroutine(Show_Confession());
         });
+
     }
 
     IEnumerator Show_Confession()
@@ -358,7 +372,7 @@ public class CharacterSwitcher : MonoBehaviour
     // 共通関数
     void Narration(string text)
     {
-        nameText.text = "ナレーション";
+        nameText.text = "";
         dialogueText.text = text;
         if (characterLeft) characterLeft.enabled = false;
         if (characterRight) characterRight.enabled = false;

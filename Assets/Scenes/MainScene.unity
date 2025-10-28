@@ -2100,6 +2100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleBGM: {fileID: 8300000, guid: e1abdf045bea0e84197f06dc7a9ed992, type: 3}
   stageBGM: {fileID: 8300000, guid: df9d0a85ea2e38a49801d3b4db096d7e, type: 3}
+  endingBGM: {fileID: 8300000, guid: 288934c8cc61b9942aab001d399592d5, type: 3}
   audioSource: {fileID: 513973814}
 --- !u!82 &513973814
 AudioSource:
@@ -5823,6 +5824,7 @@ MonoBehaviour:
   sfxReveal: {fileID: 0}
   sfxConfess: {fileID: 0}
   se_present: {fileID: 0}
+  se_click: {fileID: 0}
 --- !u!1 &1372827960
 GameObject:
   m_ObjectHideFlags: 0
@@ -6001,7 +6003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8A3C\u62E0\u30E1\u30CB\u30E5\u30FC"
+  m_text: "\u8A3C\u62E0\u4E00\u89A7"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b29fb83e537532d479ebdab6b300d54c, type: 2}
   m_sharedMaterial: {fileID: -5130981147058709841, guid: b29fb83e537532d479ebdab6b300d54c, type: 2}
@@ -8912,6 +8914,14 @@ PrefabInstance:
       propertyPath: titleBGM
       value: 
       objectReference: {fileID: 8300000, guid: e1abdf045bea0e84197f06dc7a9ed992, type: 3}
+    - target: {fileID: 6381280979314930561, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
+      propertyPath: endingBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 288934c8cc61b9942aab001d399592d5, type: 3}
+    - target: {fileID: 9095809695588049880, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9095809695588049880, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
       propertyPath: m_Enabled
       value: 1

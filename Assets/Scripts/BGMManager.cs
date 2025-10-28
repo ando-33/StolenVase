@@ -8,6 +8,7 @@ public class BGMManager : MonoBehaviour
     [Header("BGM Clips")]
     public AudioClip titleBGM;
     public AudioClip stageBGM;
+    public AudioClip endingBGM;
 
     [Header("Audio Source")]
     public AudioSource audioSource;
