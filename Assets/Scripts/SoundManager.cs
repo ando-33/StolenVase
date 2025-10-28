@@ -1,49 +1,42 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//BGMタイプ
 public enum BGMType
 {
     None,
     Title,
     InGame,
     End,
-
 }
 
-//SEタイプ
 public enum SEType
 {
     Present,
     Click,
-
 }
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     BGMType playingBGM;
-    AudioSource audio;
+
+    // 🎵 BGM用とSE用を分ける
+    private AudioSource bgmSource;
+    private AudioSource seSource;
 
     public AudioClip titleBGM;
     public AudioClip stageBGM;
     public AudioClip endingBGM;
 
-    // SEタイプ別の効果音
     public AudioClip sePresent;
     public AudioClip seClick;
 
-
-
-
-
-    //現シーン取得
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // シーンが切り替わっても破棄されないようにする
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -51,11 +44,23 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        audio = GetComponent<AudioSource>();
+        // AudioSourceを2つ用意
+        var sources = GetComponents<AudioSource>();
+        if (sources.Length < 2)
+        {
+            // もし1つしかなければ追加で作る
+            bgmSource = gameObject.AddComponent<AudioSource>();
+            seSource = gameObject.AddComponent<AudioSource>();
+        }
+        else
+        {
+            bgmSource = sources[0];
+            seSource = sources[1];
+        }
 
+        bgmSource.loop = true;
     }
 
-    //BGM再生
     public void PlayBgm(BGMType type)
     {
         if (type != playingBGM)
@@ -65,16 +70,16 @@ public class SoundManager : MonoBehaviour
             switch (type)
             {
                 case BGMType.Title:
-                    audio.clip = titleBGM;
-                    audio.Play();
+                    bgmSource.clip = titleBGM;
+                    bgmSource.Play();
                     break;
                 case BGMType.InGame:
-                    audio.clip = stageBGM;
-                    audio.Play();
+                    bgmSource.clip = stageBGM;
+                    bgmSource.Play();
                     break;
                 case BGMType.End:
-                    audio.clip = endingBGM;
-                    audio.Play();
+                    bgmSource.clip = endingBGM;
+                    bgmSource.Play();
                     break;
             }
         }
@@ -85,19 +90,17 @@ public class SoundManager : MonoBehaviour
         switch (type)
         {
             case SEType.Present:
-                audio.PlayOneShot(sePresent);
+                if (sePresent) seSource.PlayOneShot(sePresent);
                 break;
             case SEType.Click:
-                audio.PlayOneShot(seClick);
+                if (seClick) seSource.PlayOneShot(seClick);
                 break;
         }
     }
 
-
-    //停止メソッド
     public void StopBgm()
     {
-        audio.Stop();
+        bgmSource.Stop();
         playingBGM = BGMType.None;
     }
 }

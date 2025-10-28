@@ -337,7 +337,7 @@ public class CharacterSwitcher : MonoBehaviour
             // 効果音を再生
             if (SoundManager.instance != null)
             {
-                SoundManager.instance.PlaySE(SEType.Present);
+                SoundManager.instance.PlaySE(SEType.Click);
             }
             // 🔊 クリックした瞬間にBGMをエンディングに切り替える
             if (SoundManager.instance != null)
