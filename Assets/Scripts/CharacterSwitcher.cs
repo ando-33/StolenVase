@@ -335,10 +335,8 @@ public class CharacterSwitcher : MonoBehaviour
         choice4Button.onClick.AddListener(() =>
         {
             // 効果音を再生
-            if (SoundManager.instance != null)
-            {
-                SoundManager.instance.PlaySE(SEType.Click);
-            }
+            AudioSource.PlayClipAtPoint(se_click, Camera.main.transform.position);
+
             // クリックした瞬間にBGMをエンディングに切り替える
             if (SoundManager.instance != null)
             {
@@ -347,13 +345,13 @@ public class CharacterSwitcher : MonoBehaviour
                 {
                     FindObjectOfType<BGMManager>().PlayEndingBGM();
                 }
-                // エンディングBGMを再生
             }
 
             choicesPanel.SetActive(false);
             if (choicesTitleText) choicesTitleText.gameObject.SetActive(false);
             StartCoroutine(Show_Confession());
         });
+
 
     }
 

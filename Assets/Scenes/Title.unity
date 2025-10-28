@@ -688,6 +688,10 @@ PrefabInstance:
       value: SoundManager
       objectReference: {fileID: 0}
     - target: {fileID: 6381280979314930561, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
+      propertyPath: seClick
+      value: 
+      objectReference: {fileID: 8300000, guid: c9813436880a6ed42b64423ea7432b47, type: 3}
+    - target: {fileID: 6381280979314930561, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
       propertyPath: stageBGM
       value: 
       objectReference: {fileID: 8300000, guid: df9d0a85ea2e38a49801d3b4db096d7e, type: 3}
@@ -695,6 +699,10 @@ PrefabInstance:
       propertyPath: titleBGM
       value: 
       objectReference: {fileID: 8300000, guid: e1abdf045bea0e84197f06dc7a9ed992, type: 3}
+    - target: {fileID: 6381280979314930561, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
+      propertyPath: endingBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 288934c8cc61b9942aab001d399592d5, type: 3}
     - target: {fileID: 9095809695588049880, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
       propertyPath: Loop
       value: 0

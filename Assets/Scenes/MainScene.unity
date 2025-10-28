@@ -5779,8 +5779,8 @@ MonoBehaviour:
   sfx: {fileID: 0}
   sfxReveal: {fileID: 0}
   sfxConfess: {fileID: 0}
-  se_present: {fileID: 0}
-  se_click: {fileID: 0}
+  se_present: {fileID: 8300000, guid: 3a04af74f8e4887418c9941c85ea2067, type: 3}
+  se_click: {fileID: 8300000, guid: c9813436880a6ed42b64423ea7432b47, type: 3}
 --- !u!1 &1372827960
 GameObject:
   m_ObjectHideFlags: 0
