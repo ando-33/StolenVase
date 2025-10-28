@@ -699,6 +699,10 @@ PrefabInstance:
       propertyPath: Loop
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9095809695588049880, guid: 32456ee09dcb7134d8255682c72442d2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -736,6 +740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleBGM: {fileID: 8300000, guid: e1abdf045bea0e84197f06dc7a9ed992, type: 3}
   stageBGM: {fileID: 8300000, guid: df9d0a85ea2e38a49801d3b4db096d7e, type: 3}
+  endingBGM: {fileID: 8300000, guid: 288934c8cc61b9942aab001d399592d5, type: 3}
   audioSource: {fileID: 1623797125}
 --- !u!82 &1623797125
 AudioSource:
@@ -744,7 +749,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623797123}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 3c7e28d08576e074ab46bb279494ce3e, type: 2}
   m_audioClip: {fileID: 0}

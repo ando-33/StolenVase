@@ -13,20 +13,20 @@ public class BGMManager : MonoBehaviour
     [Header("Audio Source")]
     public AudioSource audioSource;
 
+    private string currentScene = "";
+    private bool isManualPlay = false; // ← 手動でBGMを切り替えたフラグ
+
     private void Awake()
     {
-        // すでに存在しているBGMManagerがあれば破棄する（古い方を残す）
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        // 最初の1つだけ残す
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // シーン切り替え監視を1回だけ登録
         SceneManager.activeSceneChanged -= OnSceneChanged;
         SceneManager.activeSceneChanged += OnSceneChanged;
     }
@@ -38,12 +38,25 @@ public class BGMManager : MonoBehaviour
 
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
+        // まず必ず古いシーンの音を止める
+        if (audioSource.isPlaying)
+            audioSource.Stop();
+
+        // EndingBGM再生中は上書きしない
+        if (isManualPlay) return;
+
         PlayBGMForScene(newScene.name);
     }
+
 
     private void PlayBGMForScene(string sceneName)
     {
         if (audioSource == null) return;
+
+        // もしAudioSourceが無効なら自動で有効化
+        if (!audioSource.enabled) audioSource.enabled = true;
+
+        currentScene = sceneName;
 
         AudioClip nextClip = null;
 
@@ -55,7 +68,6 @@ public class BGMManager : MonoBehaviour
         if (nextClip == null)
             return;
 
-        // 違う曲に切り替えるときだけ再生
         if (audioSource.clip != nextClip)
         {
             audioSource.Stop();
@@ -63,5 +75,24 @@ public class BGMManager : MonoBehaviour
             audioSource.loop = true;
             audioSource.Play();
         }
+    }
+
+    // ✅ 手動でBGMを再生する（シーン切替に関係なく流れる）
+    public void PlayEndingBGM()
+    {
+        if (audioSource == null || endingBGM == null) return;
+
+        isManualPlay = true; // ← 手動再生モードON
+        audioSource.Stop();
+        audioSource.clip = endingBGM;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    // ✅ 元の自動切替に戻す
+    public void ResumeSceneBGM()
+    {
+        isManualPlay = false;
+        PlayBGMForScene(currentScene);
     }
 }

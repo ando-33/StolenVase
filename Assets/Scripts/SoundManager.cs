@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     BGMType playingBGM;
 
-    // 🎵 BGM用とSE用を分ける
+    //  BGM用とSE用を分ける
     private AudioSource bgmSource;
     private AudioSource seSource;
 

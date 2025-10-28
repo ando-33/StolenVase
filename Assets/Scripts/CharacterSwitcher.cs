@@ -65,7 +65,7 @@ public class CharacterSwitcher : MonoBehaviour
     AudioSource audio;
     public AudioClip se_present;
     public AudioClip se_click;
-  
+
 
     void Awake()
     {
@@ -120,7 +120,7 @@ public class CharacterSwitcher : MonoBehaviour
         if (clickHintText) clickHintText.gameObject.SetActive(false);
     }
 
-    // 🔹 会話を一時的に非表示にする
+    //  会話を一時的に非表示にする
     void HideDialogue()
     {
         nameText.text = "";
@@ -211,7 +211,7 @@ public class CharacterSwitcher : MonoBehaviour
         }
     }
 
-    // ✅ 証拠1：警報ログのカットイン
+    //  証拠1：警報ログのカットイン
     IEnumerator ShowAlarmEvidenceCutIn()
     {
         HideDialogue();
@@ -246,14 +246,14 @@ public class CharacterSwitcher : MonoBehaviour
         yield return StartCoroutine(Start_B_OuterClaim());
     }
 
-    // ✅ 修正：選択肢とかぶらないようセリフを非表示にする
+    // 選択肢とかぶらないようセリフを非表示にする
     IEnumerator WrongEvidenceFlow()
     {
         if (evidencePanel) evidencePanel.SetActive(false);
         ShowLeftCharacter("探偵", "提示する証拠が違うようだ。もう一度選び直そう。");
         yield return WaitForClick();
 
-        HideDialogue(); // ←★ここで発言を消してから証拠パネルを再表示
+        HideDialogue(); // ここで発言を消してから証拠パネルを再表示
         if (evidencePanel) evidencePanel.SetActive(true);
     }
 
@@ -266,7 +266,7 @@ public class CharacterSwitcher : MonoBehaviour
         yield return new WaitUntil(() => evidencePanel.activeSelf);
     }
 
-    // ✅ 証拠2：内側ロックのカットイン
+    //  証拠2：内側ロックのカットイン
     IEnumerator ShowInnerLockEvidenceCutIn()
     {
         HideDialogue();
@@ -279,7 +279,7 @@ public class CharacterSwitcher : MonoBehaviour
             cutInImage.preserveAspect = true;
         }
 
-        // 🔊 効果音を再生
+        // 効果音を再生
         if (SoundManager.instance != null)
             SoundManager.instance.PlaySE(SEType.Present);
 
@@ -339,11 +339,15 @@ public class CharacterSwitcher : MonoBehaviour
             {
                 SoundManager.instance.PlaySE(SEType.Click);
             }
-            // 🔊 クリックした瞬間にBGMをエンディングに切り替える
+            // クリックした瞬間にBGMをエンディングに切り替える
             if (SoundManager.instance != null)
             {
                 SoundManager.instance.StopBgm();           // 現在のBGMを止める
-                SoundManager.instance.PlayBgm(BGMType.End); // エンディングBGMを再生
+                if (BGMManagerExists())
+                {
+                    FindObjectOfType<BGMManager>().PlayEndingBGM();
+                }
+                // エンディングBGMを再生
             }
 
             choicesPanel.SetActive(false);
@@ -368,6 +372,12 @@ public class CharacterSwitcher : MonoBehaviour
 
         dialogueText.text = "（お疲れさまでした）";
     }
+
+    bool BGMManagerExists()
+    {
+        return FindObjectOfType<BGMManager>() != null;
+    }
+
 
     // 共通関数
     void Narration(string text)
